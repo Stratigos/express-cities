@@ -47,4 +47,10 @@ describe('Creating New Cities', function() {
       .send('name=Springfield&description=where+the+simpsons+live')
       .expect(201, done);
   });
+  it('Returns City Name', function(done) {
+    request(app)
+      .post('/cities')
+      .send('name=Springfield&description=where+the+simpsons+live')
+      .expect(/springfield/i, done);
+  });
 });
