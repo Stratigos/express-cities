@@ -11,6 +11,11 @@ app.get('/cities', function(req, res){
   res.json(cities);
 });
 
+app.post('/cities', function(req, res) {
+  res.sendStatus(201);
+});
+
+
 // encapsulate app inside of node module, in order to allow app definition and
 //  the code that binds the app to the network to exist in different
 //  files/modules (this replaces `app.listen(3000);`).

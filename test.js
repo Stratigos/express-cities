@@ -39,3 +39,12 @@ describe('Listing Cities on /cities', function() {
       .expect(JSON.stringify(['Lotopia', 'Caspiana', 'Indigo']), done);
   });
 });
+
+describe('Creating New Cities', function() {
+  it('Returns 201 Status Code', function(done) {
+    request(app)
+      .post('/cities')
+      .send('name=Springfield&description=where+the+simpsons+live')
+      .expect(201, done);
+  });
+});
