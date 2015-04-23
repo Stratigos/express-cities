@@ -15,6 +15,11 @@ describe('Requests to Root Path', function() {
       .get('/')
       .expect('Content-Type', /html/, done);
   });
+  it('Returns Index File with Cities', function(done) {
+    request(app)
+      .get('/')
+      .expect(/cities/i, done);
+  });
 });
 
 describe('Listing Cities on /cities', function() {
