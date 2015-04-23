@@ -15,13 +15,17 @@ var urlEncode  = bodyParser.urlencoded({extended: false});
 // using redis for data store
 var redis  = require('redis');
 var client = redis.createClient();
-
+// Select the appropriate database. Redis databases are identified by an
+//  integer index, so a seperate number should be used for dev and test 
+//  databases. For the sake of this demonstration, the stringlength of the
+//  'development' and 'test' environments will be used.
+client.select((process.env.NODE_ENV || 'development').length);
 // Seed the database. Typically this would be done by a separate script on the
 //  server, to avoid running this seed procedure with each app restart, but 
 //  performing the seeding here simplifies this demonstration.
-client.hset('cities', 'Lotopia', 'No, it isnt \'LOLtopia\'...');
-client.hset('cities', 'Caspiana', 'A city on the sea. A very cold sea.');
-client.hset('cities', 'Indigo', 'One blue town. Its practically ultraviolet.');
+// client.hset('cities', 'Lotopia', 'No, it isnt \'LOLtopia\'...');
+// client.hset('cities', 'Caspiana', 'A city on the sea. A very cold sea.');
+// client.hset('cities', 'Indigo', 'One blue town. Its practically ultraviolet.');
 
 // ----- BEGIN ROUTES -----
 
@@ -30,7 +34,7 @@ client.hset('cities', 'Indigo', 'One blue town. Its practically ultraviolet.');
 app.use(express.static('public'));
 
 // Displays all current Cities
-app.get('/cities', function(req, res) {
+app.get('/cities', function(req, res) { 
   client.hkeys('cities', function(err, citynames) {
     if (err) {
       throw err;
