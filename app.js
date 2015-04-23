@@ -12,12 +12,16 @@ var app        = express();
 var bodyParser = require('body-parser');
 var urlEncode  = bodyParser.urlencoded({extended: false});
 
-// Local var 'cities' acts like a db for demo
-var cities = {
-  'Lotopia': 'No, it isnt \'LOLtopia\'...',
-  'Caspiana': 'A city on the sea. A very cold sea.',
-  'Indigo': 'One blue town. Its practically ultraviolet.'
-};
+// using redis for data store
+var redis  = require('redis');
+var client = redis.createClient();
+
+// Seed the database. Typically this would be done by a separate script on the
+//  server, to avoid running this seed procedure with each app restart, but 
+//  performing the seeding here simplifies this demonstration.
+client.hset('cities', 'Lotopia', 'No, it isnt \'LOLtopia\'...');
+client.hset('cities', 'Caspiana', 'A city on the sea. A very cold sea.');
+client.hset('cities', 'Indigo', 'One blue town. Its practically ultraviolet.');
 
 // ----- BEGIN ROUTES -----
 
@@ -26,8 +30,13 @@ var cities = {
 app.use(express.static('public'));
 
 // Displays all current Cities
-app.get('/cities', function(req, res){
-  res.json(Object.keys(cities));
+app.get('/cities', function(req, res) {
+  client.hkeys('cities', function(err, citynames) {
+    if (err) {
+      throw err;
+    }
+    res.json(citynames);
+  });
 });
 
 // POST requests to /cities are url-encoded via the `body-parser.urlencoded`
@@ -36,8 +45,12 @@ app.get('/cities', function(req, res){
 app.post('/cities', urlEncode, function(req, res) {
   // uses 'body-parser' middleware to get request.body
   var newCity = req.body;
-  cities[newCity.name] = newCity.description;
-  res.status(201).json(newCity.name);
+  client.hset('cities', newCity.name, newCity.description, function(err) {
+    if (err) {
+      throw err;
+    }
+    res.status(201).json(newCity.name);  
+  });  
 });
 
 // ----- END ROUTES -----
