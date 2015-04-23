@@ -6,7 +6,8 @@ app.get('/', function(req, res) {
 });
 
 app.get('/cities', function(req, res){
-  res.json('OK');
+  var cities = ['Lotopia', 'Caspiana', 'Indigo'];
+  res.json(cities);
 });
 
 // encapsulate app inside of node module, in order to allow app definition and
