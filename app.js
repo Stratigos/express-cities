@@ -31,7 +31,8 @@ app.get('/cities', function(req, res){
 });
 
 // POST requests to /cities are url-encoded via the `body-parser.urlencoded`
-//  middleware.
+//  middleware. `urlEncode` recieves the request, and creates the request.body
+//  property, from which POST params can be extracted.
 app.post('/cities', urlEncode, function(req, res) {
   // uses 'body-parser' middleware to get request.body
   var newCity = req.body;
