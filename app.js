@@ -1,8 +1,12 @@
 var express = require('express');
 var app = express();
 
-app.get('/', function(reqiest, response) {
-  response.send('OK');
+app.get('/', function(req, res) {
+  res.send('OK');
+});
+
+app.get('/cities', function(req, res){
+  res.json('OK');
 });
 
 // encapsulate app inside of node module, in order to allow app definition and
