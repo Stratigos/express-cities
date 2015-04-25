@@ -4,9 +4,9 @@
   driven development.
  */
 var request = require('supertest');
-var app     = require('./app');
-var redis   = require('redis');
-var client  = redis.createClient();
+var app    = require('./app');
+var redis  = require('redis');
+var client = redis.createClient();
 
 // `NODE_ENV` set via 'npm test' command in package.json
 client.select(process.env.NODE_ENV.length);
