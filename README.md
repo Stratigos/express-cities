@@ -1,3 +1,5 @@
+Example Node JS application that allows CRUD operations on a "City" resource.
+
 * to run tests: `npm test`
 * `./bin/www` to run app
 
