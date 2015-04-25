@@ -1,7 +1,6 @@
 /**
  * Each test represents the addition of some feature to the application,
- *  which was essentially built with test
-  driven development.
+ *  which was essentially built with test driven development.
  */
 var request = require('supertest');
 var app    = require('./app');
