@@ -66,8 +66,14 @@ app.post('/cities', urlEncode, function(req, res) {
   });  
 });
 
+// Deletes a City resource
 app.delete('/cities/:name', function(req, res) {
-  res.sendStatus(204);
+  client.hdel('cities', req.params.name, function(err) {
+    if(err) {
+      throw err;
+    }
+    res.sendStatus(204);
+  });
 });
 
 // ----- END ROUTES -----
