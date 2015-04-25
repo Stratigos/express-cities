@@ -14,5 +14,5 @@ If using heroku, then run the following commands:
 * `heroku open` to view app on heroku server
 
 #### Redis
-
+* for production heroku server, use `heroku addons:add redistogo:TIERNAME` from local cli
 * for local testing, use `redis-server`

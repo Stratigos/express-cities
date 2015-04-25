@@ -12,8 +12,18 @@ var app        = express();
 var bodyParser = require('body-parser');
 var urlEncode  = bodyParser.urlencoded({extended: false});
 
-// using redis for data store
+// Using redis for data store, and redistogo for persistence. 
+//  @see https://devcenter.heroku.com/articles/redistogo#using-with-node-js
 var redis  = require('redis');
+if (process.env.REDISTOGO_URL) {
+  var rtg    = require('url').parse(process.env.REDISTOGO_URL);
+  var cleint = require('redis').createClient(rtg.port, rtg.hostname);
+
+  cleint.auth(rtg.auth.split(":")[1]);
+} else {
+  var client = redis.createClient();
+}
+
 var client = redis.createClient();
 // Select the appropriate database. Redis databases are identified by an
 //  integer index, so a seperate number should be used for dev and test 
