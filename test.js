@@ -66,7 +66,7 @@ describe('Creating New Cities', function() {
       .send('name=Springfield&description=where+the+simpsons+live')
       .expect(/springfield/i, done);
   });
-  
+
   it('Validates New City Name and Description', function(done) {
     // first check that invalid data returns 'Bad Request'
     request(app)
@@ -90,6 +90,28 @@ describe('Deleting Cities', function() {
   });
 
   // remove any data created for this test
+  after(function() {
+    client.flushdb();
+  });
+});
+
+describe('Shows a City Resource\'s Info', function() {
+
+  before(function() {
+    client.hset('cities', 'Derpltuckia', 'A City Filled with Hurp.');
+  });
+
+  it('Returns 200 Status Code', function(done) {
+    request(app)
+      .get('/cities/Derpltuckia')
+      .expect(200, done);
+  });
+
+  // a simple test to show templates are returning HTML
+  // it('Returns HTML Format', function(done) {
+    
+  // });
+
   after(function() {
     client.flushdb();
   });

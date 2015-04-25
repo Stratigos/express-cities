@@ -52,6 +52,14 @@ app.get('/cities', function(req, res) {
   });
 });
 
+// Show a City
+app.get('/cities/:name', function(req, res) {
+  // client.hget('cities', req.params.name, function(err, cityDescription) {
+  //   res.status(200).json({req.params.name: cityDescription});
+  // });
+  res.sendStatus(200);
+});
+
 // POST requests to /cities are url-encoded via the `body-parser.urlencoded`
 //  middleware. `urlEncode` recieves the request, and creates the request.body
 //  property, from which POST params can be extracted.
