@@ -58,6 +58,12 @@ app.get('/cities', function(req, res) {
 app.post('/cities', urlEncode, function(req, res) {
   // uses 'body-parser' middleware to get request.body
   var newCity = req.body;
+
+  // validation
+  if(!newCity.name || !newCity.description) {
+    res.sendStatus(400);
+  }
+
   client.hset('cities', newCity.name, newCity.description, function(err) {
     if (err) {
       throw err;

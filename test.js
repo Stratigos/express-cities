@@ -18,11 +18,13 @@ describe('Requests to Root Path', function() {
       .get('/')
       .expect(200, done);
   });
+
   it('Returns HTML Format', function(done) {
     request(app)
       .get('/')
       .expect('Content-Type', /html/, done);
   });
+
   it('Returns Index File with Cities', function(done) {
     request(app)
       .get('/')
@@ -36,11 +38,13 @@ describe('Listing Cities on /cities', function() {
       .get('/cities')
       .expect(200, done);
   });
+
   it('Returns JSON Format', function(done) {
     request(app)
       .get('/cities')
       .expect('Content-Type', /json/, done);
   });
+
   it('Returns Initial Cities', function(done) {
     request(app)
       .get('/cities')
@@ -55,22 +59,31 @@ describe('Creating New Cities', function() {
       .send('name=Springfield&description=where+the+simpsons+live')
       .expect(201, done);
   });
+
   it('Returns City Name', function(done) {
     request(app)
       .post('/cities')
       .send('name=Springfield&description=where+the+simpsons+live')
       .expect(/springfield/i, done);
   });
+  
+  it('Validates New City Name and Description', function(done) {
+    // first check that invalid data returns 'Bad Request'
+    request(app)
+      .post('/cities')
+      .send('name=&description=')
+      .expect(400, done);
+  });
 });
 
-describe('Deleting Cities', function(){
+describe('Deleting Cities', function() {
 
   // add a city to be deleted.
   before(function() {
     client.hset('cities', 'Bananaville', 'A Town Created from Grafting.');
   });
 
-  it('Returns 204 Status Code', function(done){
+  it('Returns 204 Status Code', function(done) {
     request(app)
       .delete('/cities/Bananaville')
       .expect(204, done);
