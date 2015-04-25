@@ -66,6 +66,10 @@ app.post('/cities', urlEncode, function(req, res) {
   });  
 });
 
+app.delete('/cities/:name', function(req, res) {
+  res.sendStatus(204);
+});
+
 // ----- END ROUTES -----
 
 // encapsulate app inside of node module, in order to allow app definition and

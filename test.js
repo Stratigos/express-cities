@@ -45,7 +45,6 @@ describe('Listing Cities on /cities', function() {
     request(app)
       .get('/cities')
       .expect(JSON.stringify([]), done);
-      // JSON.stringify(['Lotopia', 'Caspiana', 'Indigo'] 
   });
 });
 
@@ -61,5 +60,30 @@ describe('Creating New Cities', function() {
       .post('/cities')
       .send('name=Springfield&description=where+the+simpsons+live')
       .expect(/springfield/i, done);
+  });
+});
+
+describe('Deleting Cities', function(){
+
+  // add a city to be deleted.
+  before(function() {
+    client.hset('cities', 'Bananaville', 'A Town Created from Grafting.');
+  });
+
+  it('Returns 204 Status Code', function(done){
+    request(app)
+      .delete('/cities/Bananaville')
+      .expect(204)
+      .end(function(err) {
+        if(err) {
+          throw err;
+        }
+        done();
+      });
+  });
+
+  // remove any data created for this test
+  after(function() {
+    client.flushdb();
   });
 });
