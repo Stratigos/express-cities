@@ -17,9 +17,7 @@ var urlEncode  = bodyParser.urlencoded({extended: false});
 var redis  = require('redis');
 if (process.env.REDISTOGO_URL) {
   var rtg    = require('url').parse(process.env.REDISTOGO_URL);
-  console.log("\n RTG PORT AND HOSTNAME: \n", rtg.port, rtg.hostname, "\n");
   var client = redis.createClient(rtg.port, rtg.hostname);
-  console.log("\n REDIS CLIENT: ", client, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
 
   client.auth(rtg.auth.split(":")[1]);
 } else {
