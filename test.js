@@ -73,13 +73,7 @@ describe('Deleting Cities', function(){
   it('Returns 204 Status Code', function(done){
     request(app)
       .delete('/cities/Bananaville')
-      .expect(204)
-      .end(function(err) {
-        if(err) {
-          throw err;
-        }
-        done();
-      });
+      .expect(204, done);
   });
 
   // remove any data created for this test
