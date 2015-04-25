@@ -108,9 +108,17 @@ describe('Shows a City Resource\'s Info', function() {
   });
 
   // a simple test to show templates are returning HTML
-  // it('Returns HTML Format', function(done) {
-    
-  // });
+  it('Returns HTML Format', function(done) {
+    request(app)
+      .get('/cities/Derpltuckia')
+      .expect('Content-Type', /html/, done);    
+  });
+
+  it('Returns City Metadata', function(done) {
+    request(app)
+      .get('/cities/Derpltuckia')
+      .expect(/Hurp/, done);
+  });
 
   after(function() {
     client.flushdb();

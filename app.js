@@ -54,10 +54,20 @@ app.get('/cities', function(req, res) {
 
 // Show a City
 app.get('/cities/:name', function(req, res) {
-  // client.hget('cities', req.params.name, function(err, cityDescription) {
-  //   res.status(200).json({req.params.name: cityDescription});
-  // });
-  res.sendStatus(200);
+  client.hget('cities', req.params.name, function(err, cityDescription) {
+    // EJS (Embedded Javascript Templates) looks for templates in the `views/`
+    //  dir by default. The second arg for render() is an object which stores
+    //  template data.
+    res.render(
+      'show.ejs',
+      {
+        city: {
+          name:        req.params.name,
+          description: cityDescription
+        }
+      }
+    );
+  });
 });
 
 // POST requests to /cities are url-encoded via the `body-parser.urlencoded`
