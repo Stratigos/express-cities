@@ -16,10 +16,8 @@ var urlEncode  = bodyParser.urlencoded({extended: false});
 //  @see https://devcenter.heroku.com/articles/redistogo#using-with-node-js
 var redis  = require('redis');
 if (process.env.REDISTOGO_URL) {
-  console.log("\n !!!!!!!!!!!!!!!!!! REDISTOGO_URL:", process.env.REDISTOGO_URL);
   var rtg    = require('url').parse(process.env.REDISTOGO_URL);
-  console.log("\n REDISTOGO INSTANCE: ", rtg, "\n**********************************************************\n")
-  var cleint = require('redis').createClient(rtg.port, rtg.hostname);
+  var cleint = redis.createClient(rtg.port, rtg.hostname);
   console.log("\n REDIS CLIENT: ", client, "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
 
   cleint.auth(rtg.auth.split(":")[1]);
