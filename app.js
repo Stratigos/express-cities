@@ -22,14 +22,13 @@ if (process.env.REDISTOGO_URL) {
   cleint.auth(rtg.auth.split(":")[1]);
 } else {
   var client = redis.createClient();
+  // Select the appropriate database. Redis databases are identified by an
+  //  integer index, so a seperate number should be used for dev and test 
+  //  databases. For the sake of this demonstration, the stringlength of the
+  //  'development' and 'test' environments will be used.
+  client.select((process.env.NODE_ENV || 'development').length);
 }
 
-var client = redis.createClient();
-// Select the appropriate database. Redis databases are identified by an
-//  integer index, so a seperate number should be used for dev and test 
-//  databases. For the sake of this demonstration, the stringlength of the
-//  'development' and 'test' environments will be used.
-client.select((process.env.NODE_ENV || 'development').length);
 // Seed the database. Typically this would be done by a separate script on the
 //  server, to avoid running this seed procedure with each app restart, but 
 //  performing the seeding here simplifies this demonstration.
