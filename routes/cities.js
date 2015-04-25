@@ -1,5 +1,8 @@
 /**
  * Routes module. Defines routes for Cities application.
+ * Routes are defined relative to '/', thus any paths to these routes
+ *  will be defined within app.js via middleware call, i.e.,
+ *  `app.use('/cities', require('./routes/cities'))`
  */
 
  var express = require('express');
